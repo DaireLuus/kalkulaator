@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+     
+     <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    
+    <title>Kuumaksete kalkulaator</title>
+    
+    <style>
+.h1 {
+  color: black;
+}
+
+#backgroundGrey {
+  margin: 50px;
+  padding: 25px 50px 100px 50px;
+  background: #EAF5FA;
+}
+
+#backgroundWhite {
+  margin: 25px 100px 25px 100px;
+  padding: 25px 50px 100px 50px;
+  background: #FFFFFF;
+}
+.center {
+  text-align: center;
+  color: black;
+}
+.left {
+  text-align: left;
+  color: black;
+  margin: 25px;
+  font-size: 16px;
+}
+.right {
+  text-align: right;
+  color: black;
+  margin: 25px;
+  font-size: 16px;
+}
+
+
+.container {
+  display: block;
+  position: relative;  
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  }
+
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border: 1px solid grey;
+  box-sizing: top;
+  background-color: #f3f3f3;
+}
+
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+
+.container input:checked ~ .checkmark {
+  background-color: #29a20f;
+}
+
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.button {
+  border: none;
+  color: white;
+  padding: 8px 25px 8px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 14px 14px;
+  cursor: pointer;
+  background-color: #34B233;
+  border-radius: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  background-color: white;
+}
+
+.box {
+  float: left;
+  width: 250px;
+  height: 100px;
+  padding: 50px;
+  border: 1px solid grey;
+  border-radius: 24px;
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 14px 14px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.grid-container {
+  display: grid;
+  grid-column-gap: 50px;
+  grid-template-columns: auto auto;
+  background-color: white;
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  
+  padding: 20px;
+  font-size: 16px;
+  text-align: left;
+}
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+  background-position: left;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #34B233;
+  cursor: pointer;
+}
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  
+  font-size: 16px;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 15px 15px 15px 15px;
+  height: 65px;
+  width: 100%;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #EAF5FA;
+  color: black;
+}
+form {
+ width: 50px;
+ height: 50px;
+ margin: 0;
+ font-size: 16px;
+ position: relative;
+}
+input {
+ width: 250px;
+ height: 50px;
+ font-size: 16px;
+}
+input[type="range"]{
+    -webkit-appearance: none;
+    -moz-apperance: none;
+    border-radius: 6px;
+    height: 20px;
+    outline: none;
+    cursor: pointer;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0.15, #34B233),
+        color-stop(0.15, #C5C5C5)
+    );
+}
+        
+      </style>
+</head>
+
+<body>
+    <div id="backgroundGrey">
+    <div id="backgroundWhite">
+    
+    
+     <h1 class="center"><strong > Kuumaksete kalkulaator </strong></h1>
+        
+     
+     <p class="left"> Teenus: </p>
+    
+     
+     <div class="clearfix">
+      <div class="flex-container">
+      <div class="box">
+      <label class="container">Päikesepaneelid
+      <input type="checkbox"  id ="paneel" onclick="intressToTablePaneel()">
+      <span class="checkmark"></span>
+      </label>
+      </div>
+      <div class="box" style="background-color: white">
+      <label class="container">Soojuspump
+      <input type="checkbox" id = "pump" onclick = "intressToTablePump()">
+      <span class="checkmark"></span>
+      </label>
+      </div>
+      <div class="box" style="background-color: white">
+      <label class="container">Elektritööd või gaasitööd
+      <input type="checkbox" id ="elekter" onclick = "intressToTableElekter()">
+      <span class="checkmark"></span>
+      </label>
+      </div>
+      <div class="box" style="background-color: white">
+      <label class="container">Off-Grid võrguvaba elekter
+      <input type="checkbox" id ="offgrid" onclick = "intressToTableOffgrid()">
+      <span class="checkmark"></span>
+      </label>
+      </div>
+      <div class="box" style="background-color: white">
+      <label class="container">Elektriautode laadimislahendused
+      <input type="checkbox" id="auto" onclick = "intressToTableAuto()">
+      <span class="checkmark"></span>
+      </label>
+    </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <div class="grid-container">
+    <div class="grid-item">Summa:
+    <div class="slidecontainer">
+    <div class="center">
+    <button class="button"><span id="demo"></span></button></div>
+    
+    <input type="range" min="300" max="25000" value="0" class="slider" id="myRange" onchange="sumToTable()"></div>
+    
+<p style="text-align:left;">
+    300€
+    <span style="float:right;">
+        25000€
+    </span>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="grid-container">
+    <div class="grid-item">
+    <p> Periood: <span style = "color:red;">*</span> </p>
+   
+    <form action="/action_page.php" >
+   <input type="number" id="period" name="period" min="6" max="120" step="6" value="6" onchange="periodToTable()">
+  
+</form>
+</div>
+
+<div class="grid-item">
+    <p> Sissemakse (eur): <span style = "color:red;">*</span> </p>
+      
+    <form action="/action_page.php">
+    <input type="number" id="sissemakse" name="sissemakse" min="0" max="250000" step="1" value="0"onchange="sumToTable()">
+  
+</form>
+
+</div>
+
+
+    </div>
+
+    
+
+
+      
+ </div>
+
+    <div class="grid-item">
+    <table id="customers">
+    <tr>
+    <td>Intress</td>
+    <td><span style = "float:right;"><p id="demo3">0</p></span></td>
+    <td>%</td>
+  </tr>
+  <tr>
+    <td>Lepingutasu</td>
+    <td><span style = "float:right;"><p id="demo4">0</p></span></td>
+    <td>€</td>
+  </tr>
+  <tr>
+    <td>Igakuine haldustasu </td>
+    <td><span style = "float:right;"><p id="demo5">0</p></span></td>
+    <td>€</td>
+  </tr>
+  <tr>
+    <td>Periood</td>
+    <td><span style = "float:right;"><p id="demo1">6</p></span></td>
+    <td>kuud</td>
+  </tr>
+  <tr>
+    <td>Projekti maksumus</td>
+    <td><span style = "float:right;"><p id="demo2">0</p></span></td>
+    <td>€</td>
+  </tr>
+  <tr>
+    <th>Kuumakse </th>
+    <th><span style = "float:right;"><span style = "color:#34B233;"><p id="demo6">0</p></span></span></th>
+    <th><span style = "color:#34B233;">€</span></th>
+  </tr>
+    </table>
+    </div>
+    
+    </div>
+    </div>
+
+
+
+
+
+
+    <div class="center">
+    <button class="button">Esitan taotluse ></button>                         
+    
+    </div>
+ 
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+    
+    <script>
+
+$('input[type="range"]').change(function () {
+    var val = ($(this).val() - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'));
+    
+    $(this).css('background-image',
+                '-webkit-gradient(linear, left top, right top, '
+                + 'color-stop(' + val + ', #34B233), '
+                + 'color-stop(' + val + ', #C5C5C5)'
+                + ')'
+                );
+});
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  var checkBox1 = document.getElementById("paneel");
+  var checkBox2 = document.getElementById("pump");
+  var checkBox3 = document.getElementById("elekter");
+  var checkBox4 = document.getElementById("offgrid");
+  var checkBox5 = document.getElementById("auto");
+  output.innerHTML = this.value;
+  if (checkBox1.checked == true){
+    intressToTablePaneel()
+  }
+  if (checkBox2.checked == true){
+    intressToTablePump()
+  }
+  if (checkBox3.checked == true){
+    intressToTableElekter()
+  }
+  if (checkBox4.checked == true){
+    intressToTableOffgrid()
+
+  }
+  if (checkBox5.checked == true){
+    intressToTableAuto()
+  }
+}
+
+function periodToTable() {
+  var periood = document.getElementById("period").value;
+  var checkBox1 = document.getElementById("paneel");
+  var checkBox2 = document.getElementById("pump");
+  var checkBox3 = document.getElementById("elekter");
+  var checkBox4 = document.getElementById("offgrid");
+  var checkBox5 = document.getElementById("auto");
+
+  document.getElementById("demo1").innerHTML = periood;
+  if (checkBox1.checked == true){
+    intressToTablePaneel()
+  }
+  if (checkBox2.checked == true){
+    intressToTablePump()
+  }
+  if (checkBox3.checked == true){
+    intressToTableElekter()
+  }
+  if (checkBox4.checked == true){
+    intressToTableOffgrid()
+
+  }
+  if (checkBox5.checked == true){
+    intressToTableAuto()
+  }
+}
+
+function sumToTable() {
+  var summa = document.getElementById("myRange").value;
+  var sissemakse = document.getElementById("sissemakse").value;
+  var checkBox1 = document.getElementById("paneel");
+  var checkBox2 = document.getElementById("pump");
+  var checkBox3 = document.getElementById("elekter");
+  var checkBox4 = document.getElementById("offgrid");
+  var checkBox5 = document.getElementById("auto");
+  document.getElementById("demo2").innerHTML = summa - sissemakse;
+  if (checkBox1.checked == true){
+    intressToTablePaneel()
+  }
+  if (checkBox2.checked == true){
+    intressToTablePump()
+  }
+  if (checkBox3.checked == true){
+    intressToTableElekter()
+  }
+  if (checkBox4.checked == true){
+    intressToTableOffgrid()
+
+  }
+  if (checkBox5.checked == true){
+    intressToTableAuto()
+  }
+  }
+  
+  function intressToTablePaneel() {
+  var checkBox = document.getElementById("paneel");
+  var paneel = 7.9;
+  var leptasu = 50;
+  var haldtasu = 1;
+  var periood = document.getElementById("period").value;
+  var summa = document.getElementById("myRange").value;
+  var sissemakse = document.getElementById("sissemakse").value;
+  var kogusumma = (summa - sissemakse) * paneel / 100 / periood + haldtasu;
+  if (checkBox.checked == true){
+  document.getElementById("demo3").innerHTML = paneel;
+  document.getElementById("demo4").innerHTML = leptasu;
+  document.getElementById("demo5").innerHTML = haldtasu;
+  document.getElementById("demo6").innerHTML = kogusumma.toFixed(2);
+  } 
+  else{
+  document.getElementById("demo3").innerHTML = 0;
+  document.getElementById("demo4").innerHTML = 0;
+  document.getElementById("demo5").innerHTML = 0;
+  document.getElementById("demo6").innerHTML = 0;
+  }     
+  }  
+  
+  
+  function intressToTablePump() {
+  var checkBox = document.getElementById("pump");
+  var leptasu 
+  var haldtasu = 1;
+  var pump 
+  var periood = document.getElementById("period").value;
+  var summa = document.getElementById("myRange").value;
+  var sissemakse = document.getElementById("sissemakse").value;
+  var kogusumma 
+  
+  if (checkBox.checked == true){
+  if (summa < 2000) {
+    pump = 7.9
+    leptasu = 30
+    kogusumma = (summa - sissemakse) * pump / 100 / periood + haldtasu;
+  }
+  if (summa < 6000 && summa > 1999) {
+    pump = 6.5
+    leptasu = 20
+    kogusumma = (summa - sissemakse) * pump / 100 / periood + haldtasu;
+  }
+  if (summa > 6000 && summa < 25001) {
+    pump = 5.9
+    leptasu = 20
+    kogusumma = (summa - sissemakse) * pump / 100 / periood + haldtasu;
+  }
+  
+  document.getElementById("demo3").innerHTML = pump;
+  document.getElementById("demo4").innerHTML = leptasu;
+  document.getElementById("demo5").innerHTML = haldtasu;
+  
+  document.getElementById("demo6").innerHTML = kogusumma.toFixed(2);
+  } 
+  else{
+    document.getElementById("demo3").innerHTML = 0;
+  document.getElementById("demo4").innerHTML = 0;
+  document.getElementById("demo5").innerHTML = 0;
+  document.getElementById("demo6").innerHTML = 0;
+  }    
+  } 
+
+
+
+
+
+  function intressToTableElekter() {
+  var periood = document.getElementById("period").value;
+  var summa = document.getElementById("myRange").value;
+  var sissemakse = document.getElementById("sissemakse").value;
+  var kogusumma 
+  var checkBox = document.getElementById("elekter");
+  var elekter 
+  var leptasu 
+  var haldtasu 
+  if (checkBox.checked == true){
+  if (summa < 1000) {
+    elekter = 9.9
+    leptasu = 30
+    haldtasu = 1
+    kogusumma = (summa - sissemakse) * elekter / 100 / periood + haldtasu;
+  }
+  if (summa < 2000 && summa > 999) {
+    elekter = 8.9
+    leptasu = 20
+    haldtasu = 1
+    kogusumma = (summa - sissemakse) * elekter / 100 / periood + haldtasu;
+  }
+  if (summa < 6000 && summa > 1999) {
+    elekter = 7.5
+    leptasu = 20
+    haldtasu = 0
+    kogusumma = (summa - sissemakse) * elekter / 100 / periood + haldtasu;
+  }
+  if (summa > 6000 && summa < 25000) {
+    elekter = 6.9
+    leptasu = 20
+    haldtasu = 0
+    kogusumma = (summa - sissemakse) * elekter / 100 / periood + haldtasu;
+  }
+  
+  document.getElementById("demo3").innerHTML = elekter;
+  document.getElementById("demo4").innerHTML = leptasu;
+  document.getElementById("demo5").innerHTML = haldtasu;
+  document.getElementById("demo6").innerHTML = kogusumma.toFixed(2);
+  } 
+  else{
+    document.getElementById("demo3").innerHTML = 0;
+  document.getElementById("demo4").innerHTML = 0;
+  document.getElementById("demo5").innerHTML = 0;
+  document.getElementById("demo6").innerHTML = 0;
+  }    
+}
+  
+
+
+  function intressToTableOffgrid() {
+  var periood = document.getElementById("period").value;
+  var summa = document.getElementById("myRange").value;
+  var sissemakse = document.getElementById("sissemakse").value;
+  var kogusumma 
+  var checkBox = document.getElementById("offgrid");
+  var leptasu 
+  var haldtasu = 0;
+  var offgrid 
+  if (checkBox.checked == true){
+  if (summa < 2000) {
+    offgrid = 7.9
+    leptasu = 30
+    kogusumma = (summa - sissemakse) * offgrid / 100 / periood + haldtasu;
+  }
+  if (summa < 6000 && summa > 1999) {
+    offgrid = 6.5
+    leptasu = 20
+    kogusumma = (summa - sissemakse) * offgrid / 100 / periood + haldtasu;
+  }
+  if (summa > 6000 && summa < 25001) {
+    offgrid = 5.9
+    leptasu = 20
+    kogusumma = (summa - sissemakse) * offgrid / 100 / periood + haldtasu;
+  }
+  
+  document.getElementById("demo3").innerHTML = offgrid;
+  document.getElementById("demo4").innerHTML = leptasu;
+  document.getElementById("demo5").innerHTML = haldtasu;
+  document.getElementById("demo6").innerHTML = kogusumma.toFixed(2);
+  } 
+  else{
+    document.getElementById("demo3").innerHTML = 0;
+  document.getElementById("demo4").innerHTML = 0;
+  document.getElementById("demo5").innerHTML = 0;
+  document.getElementById("demo6").innerHTML = 0;
+  }      
+}
+  
+
+  function intressToTableAuto() {
+  var periood = document.getElementById("period").value;
+  var summa = document.getElementById("myRange").value;
+  var sissemakse = document.getElementById("sissemakse").value;
+  var kogusumma
+  var checkBox = document.getElementById("auto");
+  var leptasu 
+  var haldtasu = 2;
+  var auto 
+  if (checkBox.checked == true){
+  if (summa < 2000) {
+    auto = 7.9
+    leptasu = 50
+    kogusumma = (summa - sissemakse) * auto / 100 / periood + haldtasu;
+  }
+  if (summa < 6000 && summa > 1999) {
+    auto = 6.5
+    leptasu = 40
+    kogusumma = (summa - sissemakse) * auto / 100 / periood + haldtasu;
+  }
+  if (summa > 6000 && summa < 25001) {
+    auto = 5.9
+    leptasu = 30
+    kogusumma = (summa - sissemakse) * auto / 100 / periood + haldtasu;
+  }
+  document.getElementById("demo3").innerHTML = auto;
+  document.getElementById("demo4").innerHTML = leptasu;
+  document.getElementById("demo5").innerHTML = haldtasu;
+  document.getElementById("demo6").innerHTML = kogusumma.toFixed(2);
+  } 
+  else{
+    document.getElementById("demo3").innerHTML = 0;
+  document.getElementById("demo4").innerHTML = 0;
+  document.getElementById("demo5").innerHTML = 0;
+  document.getElementById("demo6").innerHTML = 0;
+  }    
+}  
+
+function arvuta(){
+  var periood = document.getElementById("period").value;
+  var summa = document.getElementById("myRange").value;
+  var sissemakse = document.getElementById("sissemakse").value;
+
+  var kogusumma = (summa - sissemakse)/periood
+  document.getElementById("demo6").innerHTML = kogusumma; 
+}
+
+</script>
+    
+                     
+                         
+     
+    
+    
+    
+    
+</body>
+</html>
+
